@@ -22,10 +22,10 @@ var params = {
     }
   }
 };
-rekognition.indexFaces(params, function (err, data) {
-  if (err) console.log(err, err.stack); // an error occurred
-  else console.log(data);           // successful response
-});
+// rekognition.indexFaces(params, function (err, data) {
+//   if (err) console.log(err, err.stack); // an error occurred
+//   else console.log(data);           // successful response
+// });
 
 app.use(express.static('public'));
 
@@ -33,7 +33,7 @@ app.post('/upload', function(req, res) {
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
 
-    const sampleFile = req.files.sampleFile;
+    const sampleFile = req.files.facetosearch;
 
     sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
       if (err)
