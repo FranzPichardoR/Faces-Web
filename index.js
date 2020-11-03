@@ -1,5 +1,8 @@
 const AWS = require('aws-sdk')
 
+AWS.config.loadFromPath('./credentials.json');
+AWS.config.update({region: 'us-east-1'});
+
 var rekognition = new AWS.Rekognition();
 
 var params = {
@@ -9,8 +12,8 @@ var params = {
     ExternalImageId: "myphotoid", //TODO
     Image: {
      S3Object: {
-      Bucket: "mybucket", 
-      Name: "myphoto"
+      Bucket: "edrekogbucket", 
+      Name: "MarcMerill1.jpg"
      }
     }
    };
