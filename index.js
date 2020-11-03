@@ -10,25 +10,28 @@ AWS.config.update({ region: 'us-east-1' });
 
 var rekognition = new AWS.Rekognition();
 
-function searchByImage(image) {
+function searchByImage(image, cb) {
   var params = {
     CollectionId: "faces",
-    DetectionAttributes: [
-    ],
     Image: {
-      Bytes: {
-        Bucket: "edrekogbucket",
-        Name: "MarcMerill1.jpg"
-      }
+      Bytes: image.data.buffer
     }
   };
+  rekognition.searchFacesByImage(params, function (err, data) {
+    if (err) {
+      console.log(err, err.stack); // an error occurred
+      cb([])
+    }
+    else{
+      console.log(data); // successful response
+      const imageMatches = data.FaceMatches.filter(function (match) {return match.Face.ExternalImageId !== undefined;})
+          .map(function (image){return image.Face.ExternalImageId})
+          .map(function (s3ObjectKey) {return "https://s3.amazonaws.com/edrekogbucket/" + s3ObjectKey;})
+
+          cb(imageMatches)
+    }
+  });
 }
-
-
-rekognition.searchFacesByImage(params, function (err, data) {
-  if (err) console.log(err, err.stack); // an error occurred
-  else console.log(data);           // successful response
-});
 
 app.use(express.static('public'));
 
@@ -36,14 +39,16 @@ app.post('/upload', function(req, res) {
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
 
-    const sampleFile = req.files.facetosearch;
+    const uploadedImage = req.files.facetosearch;
 
-    sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
-      if (err)
-        return res.status(500).send(err);
-
-      res.send('File uploaded!');
-    });
+  searchByImage(uploadedImage, function (images){
+ /*   var html = "<html><body>"
+    images.forEach(function (imgSrc){
+      html = html + "img src='" + imgSrc + "' />"
+    })
+    html = html + "</body></html>"
+   */ res.send(images)
+  })
 });
 
 app.listen(3000)
