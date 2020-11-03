@@ -9,7 +9,7 @@ var params = {
     CollectionId: "faces", 
     DetectionAttributes: [
     ], 
-    ExternalImageId: "myphotoid", //TODO
+    ExternalImageId: "edrekogbucketMarcMerill1.jpg", //TODO
     Image: {
      S3Object: {
       Bucket: "edrekogbucket", 
