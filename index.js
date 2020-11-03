@@ -42,12 +42,12 @@ app.post('/upload', function(req, res) {
     const uploadedImage = req.files.facetosearch;
 
   searchByImage(uploadedImage, function (images){
- /*   var html = "<html><body>"
+    let html = "<html><body>"
     images.forEach(function (imgSrc){
       html = html + "img src='" + imgSrc + "' />"
     })
     html = html + "</body></html>"
-   */ res.send(images)
+    res.send(images)
   })
 });
 
