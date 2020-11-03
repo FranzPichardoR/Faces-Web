@@ -27,6 +27,8 @@ rekognition.indexFaces(params, function (err, data) {
   else console.log(data);           // successful response
 });
 
+app.use(express.static('public'));
+
 app.post('/upload', function(req, res) {
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
@@ -40,3 +42,5 @@ app.post('/upload', function(req, res) {
       res.send('File uploaded!');
     });
 });
+
+app.listen(3000)
