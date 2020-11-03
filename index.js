@@ -25,7 +25,7 @@ function searchByImage(image, cb) {
     else{
       console.log(data); // successful response
       const imageMatches = data.FaceMatches.filter(function (match) {return match.Face.ExternalImageId !== undefined;})
-          .map(function (image){return image.Face.ExternalImageId})
+          .map(function (image) {return image.Face.ExternalImageId})
           .map(function (s3ObjectKey) {return "https://s3.amazonaws.com/edrekogbucket/" + s3ObjectKey;})
 
           cb(imageMatches)
@@ -47,7 +47,7 @@ app.post('/upload', function(req, res) {
       html = html + "img src='" + imgSrc + "' />"
     })
     html = html + "</body></html>"
-    res.send(images)
+    res.send(html)
   })
 });
 
