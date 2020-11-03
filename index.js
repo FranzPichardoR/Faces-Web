@@ -44,7 +44,7 @@ app.post('/upload', function(req, res) {
   searchByImage(uploadedImage, function (images){
     let html = "<html><body>"
     images.forEach(function (imgSrc){
-      html = html + "img src='" + imgSrc + "' />"
+      html = html + "<img src='" + imgSrc + "' />"
     })
     html = html + "</body></html>"
     res.send(html)
