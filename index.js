@@ -15,8 +15,8 @@ function searchByImage(image) {
     CollectionId: "faces",
     DetectionAttributes: [
     ],
-    Bytes: {
-      S3Object: {
+    Image: {
+      Bytes: {
         Bucket: "edrekogbucket",
         Name: "MarcMerill1.jpg"
       }
